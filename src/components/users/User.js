@@ -1,23 +1,36 @@
-import React, { Component, Fragment } from 'react';
+import React, { useEffect, Fragment, useContext } from 'react';
 import {Link} from 'react-router-dom'
 import Spinner from '../layout/Spinner';
-import PropTypes from 'prop-types';
 import Repos from '../repos/Repos';
-export class User extends Component {
-  static propTypes = {
-    getUser: PropTypes.func.isRequired,
-    getUserRepos: PropTypes.func.isRequired,
-    user: PropTypes.object.isRequired,
-    loading: PropTypes.bool.isRequired,
-  }
-  componentDidMount() {
-    console.log(this.props.match);
-    this.props.getUser(this.props.match.params.login);
-    this.props.getUserRepos(this.props.match.params.login);
-  }
-  render() {
-    const  { name, avatar_url, bio, company, blog, login, location, html_url, followers, following, public_repos, public_gists, hireable} = this.props.user;
-    const {loading, repos} = this.props;
+import GithubContext from '../../context/github/githubContext';
+const User = ({ match: {params}   }) => {
+ 
+  const githubContext = useContext(GithubContext);
+  const {
+    getUser, 
+    user: { 
+      name, 
+      avatar_url, 
+      bio, 
+      company,
+      blog,
+      login, 
+      location, 
+      html_url, followers, 
+      following, public_repos,
+       public_gists, hireable
+    }, 
+       loading, 
+       getUserRepos, 
+       repos} = githubContext;
+
+
+  useEffect(() => {
+    getUser(params.login);
+    getUserRepos(params.login);
+    //eslint-disable-next-line
+  }, []);
+
     if (loading) {
       return <Spinner />
     }
@@ -71,6 +84,5 @@ export class User extends Component {
       </Fragment>
     )
   }
-}
 
 export default User;
