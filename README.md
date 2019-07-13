@@ -1,3 +1,5 @@
+#An Application to search for gihub users via usernames. It also functionality to0 view users github details, most recently created repos, etcProject Url: https://olatundegithubfinder009876.netlify.com/user/josiaholatunde
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
